@@ -1,0 +1,66 @@
+Vagrant.configure("2") do |config|
+        config.vm.box = "ubuntu/xenial64"
+        config.vm.network "private_network", ip:"192.168.50.135"
+        config.vm.synced_folder ".", "/ejemplo_inicial_mysql"
+       
+        config.vm.provision "shell", inline: <<-SHELL
+       
+          sudo apt update
+         
+          sudo apt install -y nginx
+       
+          sudo apt-get install php -y php-mysqli
+       
+          echo "-- Insertar datos de ejemplo en la tabla 'empleados'">/home/vagrant/datos_empleados.sql
+          echo "INSERT INTO gestion_empleados.empleados (nombre, apellido, edad, salario, departamento) VALUES">> /home/vagrant/datos_empleados.sql
+          echo "('Miguel','Cueto',30, '2500.00','Ventas')," >> /home/vagrant/datos_empleados.sql
+          echo "('Manolo','Alonso',40, '3000.00','Marketing')," >> /home/vagrant/datos_empleados.sql
+          echo "('Raquel','Sánchez',50, '1500.00','Desarrollo')," >> /home/vagrant/datos_empleados.sql
+          echo "('Teresa','Molina',18, '1000.00','Ventas')," >> /home/vagrant/datos_empleados.sql
+          echo "('Pepe','Couce',40, '2500.00','Ventas')" >> /home/vagrant/datos_empleados.sql
+       
+        SHELL
+       
+      end
+
+-Crear vagrant file
+-Configurar xenial64 como box
+-git init para iniciar el control de versiones
+-Hacemos los commits
+-vagrant up / vagrant provision
+-vagrant ssh 
+- sudo su
+-sudo apt update
+- sudo apt install -y mysql-server
+- sudo systemctl status mysql
+- sudo systemctl start mysql       sudo systemctl enable mysql
+- mysql -u root -p
+- CREATE DATABASE gestion_empleados
+- SHOW databases;
+- USE gestion_empleados
+- CREATE TABLE empleados(
+    idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    edad INT,
+    salario DEDIMAL(10,2),
+    departamento VARCHAR(100));
+ALTER DATABASE gestion_libreria CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-SHOW tables;
+- Una vez que estamos dentro de mysql:
+SOURCE /home/vagrant/gestion_modulos_empleados.sql
+sudo nano /etc/nginx/sites-enabled/default
+sudo systemctl restart nginx
+
+git init
+
+git commit -m “……”
+
+gitt remote add origin http…
+
+git push -m  main
+
+git status
+
+git log  (comprobar que hay copia de seguridad)
+
